@@ -51,9 +51,9 @@ public class Customer {
 //			return true;
 //		if (!(o instanceof Customer))
 //			return false;
-//		Customer employee = (Customer) o;
-//		return Objects.equals(this.id, employee.id) && Objects.equals(this.name, employee.name)
-//				&& Objects.equals(this.surname, employee.surname);
+//		Customer customer = (Customer) o;
+//		return Objects.equals(this.id, customer.id) && Objects.equals(this.name, customer.name)
+//				&& Objects.equals(this.surname, customer.surname);
 //	}
 
 //	@Override
@@ -63,6 +63,6 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Employee{" + "id=" + this.id + ", name='" + this.name + '\'' + ", surname='" + this.surname + '\'' + '}';
+		return "Customer{" + "id=" + this.id + ", name='" + this.name + '\'' + ", surname='" + this.surname + '\'' + '}';
 	}
 }
