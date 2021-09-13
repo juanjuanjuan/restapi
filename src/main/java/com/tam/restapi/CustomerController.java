@@ -21,11 +21,11 @@ class CustomerController {
 
 	private final CustomerRepository repository;
 
-	private final CustomerModelAssembler assembler;
+	//	private final CustomerModelAssembler assembler;
 
-	CustomerController(CustomerRepository repository, CustomerModelAssembler assembler) {
+	CustomerController(CustomerRepository repository) {
 		this.repository = repository;
-		this.assembler = assembler;
+		//		this.assembler = assembler;
 	}
 
 
@@ -33,7 +33,9 @@ class CustomerController {
 	CollectionModel<EntityModel<Customer>> all() {
 
 		List<EntityModel<Customer>> customers = repository.findAll().stream()
-				.map(assembler::toModel)
+				.map(customer -> EntityModel.of(customer, //
+						linkTo(methodOn(CustomerController.class).one(customer.getId())).withSelfRel(),
+						linkTo(methodOn(CustomerController.class).all()).withRel("customers")))
 				.collect(Collectors.toList());
 
 		return CollectionModel.of(customers, linkTo(methodOn(CustomerController.class).all()).withSelfRel());
@@ -52,7 +54,10 @@ class CustomerController {
 		Customer customer = repository.findById(id)
 				.orElseThrow(() -> new CustomerNotFoundException(id));
 
-		return assembler.toModel(customer);
+		//		return assembler.toModel(customer);
+		return EntityModel.of(customer, //
+				linkTo(methodOn(CustomerController.class).one(customer.getId())).withSelfRel(),
+				linkTo(methodOn(CustomerController.class).all()).withRel("customers"));
 	}
 
 	@PutMapping("/customers/{id}")
